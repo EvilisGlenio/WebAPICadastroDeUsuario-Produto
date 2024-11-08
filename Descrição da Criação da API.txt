@@ -1,0 +1,84 @@
+Como criar uma API CLEAR utilizando .NET 8/C# e JASON Web Token (JWT) para autenticação.
+
+Estrutura Organizacional da API
+
+Ferramentas: Visual Studio, SQL Server
+
+Novas pastas:
+
+	Entities: Contém as classes das entidades (Produto e Usuário)
+	Models: Definições de modelos para entrada e saída de dados
+	Token: Configurações e métodos para geração e validação de tokens JWT
+	Config: Configurações gerais da aplicação(configuração de autenticação, banco de dados e chaves JWT )
+	Repositories: Interface e implementação de repositórios para manipulação de dados
+	Controllers: Controladores para gerenciar requisições HTTP
+
+1. Inicialização do projeto
+
+	1. Criar um novo projeto em .NET8 e C#
+	2. Configure a API com estrutura limpa (Pastas acima) e instale pacotes iniciais utilizando NUGET para garantir compatibilidade
+
+2. Instalação de Pacotes Necessários
+
+	1. Microsoft.AspNetCore.Authentication.JwtBearer (para autenticação JWT)
+	2. Microsoft.EntityFrameworkCore (para acessar o banco de dados)
+	3. Microsoft.AspNetCore.Identity.EntityFrameworkCore (para gerenciar autenticação e identidade de usuários)
+	4. Microsoft.EntityFrameworkCore.SqlServer (para integração com o SQL Server)
+	5. Microsoft.EntityFrameworkCore.Tools (para criação de migrations e ferramentas de banco de dados)
+	6. Microsoft.AspNetCore.Identity.UI (para interfaces de identidade integradas)
+
+
+3. Configuração de Entidades e Models
+
+	1. Criação das entidades principais, Produtos(ProductModel) e Usuários(ApplicationUser)
+	2. Defina Models para validar e transferir dados (InputLoginRequest, AddUserRequest)
+
+4. Configuração do Token JWT
+
+	1. Implemente a classe de autenticação com JWT, incluindo propriedades para configuração segura (JwtSecurityKey, TokenJWT, TokenJWTBuilder)
+	2. Crie métodos para gerar e validar tokens, garantindo segurança e acesso controlado (AddSecurityKey, AddSubject, AddIssuer, AddAudience, AddClaim, AddClaims, AddExpiry, Builder)
+
+
+5. Configuração do Banco de Dados(Database)
+
+	1. Definição da Connection String: Configure a string de conexão no arquivo ContextBase.cs para definir como a API se conectará ao banco de dados(de preferência com usuário e senha).
+	2. Criação do Contexto de Dados:
+		Crie uma classe de contexto(ContextBase), como ApplicationDbContext, para representar as tabelas.
+		Registre o contexto no arquivo Program.cs com o método AddDbContext, usando a connection string configurada.
+	3. Migrações:
+		No Package Manager Console, execute Add-Migration e Update-Database para gerar as tabelas no banco conforme o design da API.
+
+6. Implementação dos Repositórios
+	
+	1. Definição das Interfaces:
+		No diretório Repositories, crie uma interface para cada entidade (InterfaceProduct) para definir os métodos de acesso ao banco de dados (Add, Update, Delete, GetEntityById, List).
+	2. Implementação das Classes de Repositório:
+		Crie classes que implementem as interfaces, como RepositoryProduct, onde cada método acessa o banco por meio do _OptionsBuilder.
+	3. Registro dos Repositórios e Serviços no Program.cs:
+		Para serviços ou configurações que precisam ser únicos e usados globalmente, utilize AddSingleton<InterfaceProduct, RepositoryProduct>(), garantindo que apenas uma instância seja usada durante toda a aplicação.
+	4. Adicione a configuração de autenticação JWT com:
+		builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(/ Configurações como chave de validação e emissor do token);
+	5. Adicione configuração da string de conexão vinda do appSettings
+		AddDbContext<ContextBase>
+	6. Adicione configuração do Identity para fazer ou não confirmação de e-mail
+		AddDefaultIdentity<ApplicationUser>
+
+7. Configuração de Controladores
+	
+	1.Criação dos Controladores:
+		No diretório Controllers, crie um controlador para cada entidade principal da sua aplicação, como TokenController, UserController ou ProductController.
+		Utilize UserManager e SignInManager fornecidos pelo Identity para gerenciar usuários e logins.
+	2. Injeção de Dependências no Controlador
+		O método CreateToken é utilizado para validar as credenciais do usuário e, em caso de sucesso, gerar um token JWT.
+		Recebe uma InputLoginRequest contendo o e-mail e a senha do usuário.
+		Verifica se os campos de e-mail e senha estão preenchidos e tenta realizar o login com o SignInManager.
+
+		Explicação:
+			PasswordSignInAsync: Verifica as credenciais de login. Se o login for bem-sucedido, a criação do token continua.
+			TokenJWTBuilder: Classe personalizada que gera o token JWT, configurando chave de segurança, assunto, emissor, audiência e tempo de expiração.
+			JwtSecurityKey.Create("Secret_Key-12345678"): Gera uma chave de segurança para proteger o token. Idealmente, essa chave deve ser armazenada em um ambiente seguro.
+	3. Configuração do UserController para Gerenciamento de Usuários
+		Para gerenciar as ações de criação e atualização de usuários, configure um controlador UserController que utiliza UserManager para manipular os dados dos usuários.
+		Esse método cria um novo usuário utilizando UserManager.CreateAsync, que inclui validações automáticas e regras de segurança para garantir que a senha e os dados sejam seguros.
+	4. Implementação de Ações nos Controladores
+		Nos controladores, defina métodos para listar, adicionar, atualizar e excluir registros. Use as convenções RESTful (como GET, POST, PUT, DELETE) para facilitar o acesso e manutenção.
