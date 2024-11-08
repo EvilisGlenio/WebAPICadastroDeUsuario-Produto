@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Entities;
-using WebAPI.Repository;
+using WebApi.Entities;
+using WebApi.Repository;
 
-namespace WebAPI.Controllers
+namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -14,9 +13,9 @@ namespace WebAPI.Controllers
     {
         private readonly InterfaceProduct _InterfaceProduct;
 
-        public ProductsController(InterfaceProduct interfaceProduct)
+        public ProductsController(InterfaceProduct InterfaceProduct)
         {
-            _InterfaceProduct = interfaceProduct;
+            _InterfaceProduct = InterfaceProduct;
         }
 
         [HttpGet("/api/List")]
@@ -34,10 +33,12 @@ namespace WebAPI.Controllers
             {
                 await _InterfaceProduct.Add(product);
             }
-            catch (Exception ERRO) { }
+            catch (Exception ERRO)
+            {
+
+            }
 
             return Task.FromResult("OK");
-
         }
 
         [HttpPut("/api/Update")]
@@ -48,10 +49,14 @@ namespace WebAPI.Controllers
             {
                 await _InterfaceProduct.Update(product);
             }
-            catch (Exception ERRO) { }
+            catch (Exception ERRO)
+            {
+
+            }
 
             return Task.FromResult("OK");
         }
+
 
         [HttpGet("/api/GetEntityById")]
         [Produces("application/json")]
@@ -69,14 +74,16 @@ namespace WebAPI.Controllers
                 var product = await _InterfaceProduct.GetEntityById(id);
 
                 await _InterfaceProduct.Delete(product);
+
             }
-            catch (Exception ERRO) { 
+            catch (Exception ERRO)
+            {
                 return false;
             }
 
             return true;
+
         }
 
-    
     }
 }

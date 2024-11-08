@@ -1,17 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebAPI.Config;
-using WebAPI.Entities;
+using WebApi.Config;
+using WebApi.Entities;
 
-namespace WebAPI.Repository
+namespace WebApi.Repository
 {
     public class RepositoryProduct : InterfaceProduct
     {
+
         private readonly DbContextOptions<ContextBase> _OptionsBuilder;
 
         public RepositoryProduct()
         {
             _OptionsBuilder = new DbContextOptions<ContextBase>();
         }
+
 
         public async Task Add(ProductModel Objeto)
         {

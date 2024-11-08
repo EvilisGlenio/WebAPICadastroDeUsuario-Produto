@@ -1,12 +1,13 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 
-namespace WebAPI.Token
+namespace WebApi.Token
 {
     public class TokenJWT
     {
         private JwtSecurityToken token;
 
-        internal TokenJWT(JwtSecurityToken token) { 
+        internal TokenJWT(JwtSecurityToken token)
+        {
             this.token = token;
         }
 

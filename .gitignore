@@ -1,33 +1,5 @@
-bin/
-obj/
-.vs/
-*.user
-*.suo
-*.cache
-*.dll
-*.pdb
-*.log
-packages/
-node_modules/
-.vscode/
-.idea/
-*.sln.docstates
-_ReSharper*/
-*.ReSharper*
-[Tt]est[Rr]esult*
-[Bb]uild[Ll]og.*
-*.[Pp]ublish.xml
-*.publishsettings
-*.pubxml
-*.Development.json
-*.Production.json
-*.Staging.json
-appsettings.*.json
-!appsettings.json
-*.pfx
-*.snk
-*.coverage
-*.dotCover
-Thumbs.db
-Desktop.ini
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
 
+FileContentIndex

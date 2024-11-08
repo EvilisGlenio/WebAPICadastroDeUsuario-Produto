@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Models
+﻿namespace WebApi.Models
 {
     public class AddUserRequest
     {

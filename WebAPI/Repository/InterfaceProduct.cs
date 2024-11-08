@@ -1,6 +1,6 @@
-﻿using WebAPI.Entities;
+﻿using WebApi.Entities;
 
-namespace WebAPI.Repository
+namespace WebApi.Repository
 {
     public interface InterfaceProduct
     {

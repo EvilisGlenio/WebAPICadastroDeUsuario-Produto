@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebAPI.Entities
+namespace WebApi.Entities
 {
-    public class ApplicationUser: IdentityUser
+    public class ApplicationUser : IdentityUser
     {
+
         [Column("USR_RG")]
         public string RG { get; set; }
     }

@@ -1,6 +1,6 @@
 [
   {
-    "ContainingType": "WebAPI.Controllers.ProductsController",
+    "ContainingType": "WebApi.Controllers.ProductsController",
     "Method": "Add",
     "RelativePath": "api/Add",
     "HttpMethod": "POST",
@@ -9,30 +9,30 @@
     "Parameters": [
       {
         "Name": "product",
-        "Type": "WebAPI.Entities.ProductModel",
+        "Type": "WebApi.Entities.ProductModel",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WebAPI.Controllers.UsersController",
-    "Method": "AdicionarUsuario",
-    "RelativePath": "api/AdicionarUsuario",
+    "ContainingType": "WebApi.Controllers.UsersController",
+    "Method": "AdicionaUsuario",
+    "RelativePath": "api/AdicionaUsuario",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "login",
-        "Type": "WebAPI.Models.AddUserRequest",
+        "Type": "WebApi.Models.AddUserRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WebAPI.Controllers.TokenController",
+    "ContainingType": "WebApi.Controllers.TokenController",
     "Method": "CreateToken",
     "RelativePath": "api/CreateToken",
     "HttpMethod": "POST",
@@ -41,14 +41,14 @@
     "Parameters": [
       {
         "Name": "Input",
-        "Type": "WebAPI.Models.InputLoginRequest",
+        "Type": "WebApi.Models.InputLoginRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WebAPI.Controllers.ProductsController",
+    "ContainingType": "WebApi.Controllers.ProductsController",
     "Method": "Delete",
     "RelativePath": "api/Delete",
     "HttpMethod": "DELETE",
@@ -64,7 +64,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WebAPI.Controllers.ProductsController",
+    "ContainingType": "WebApi.Controllers.ProductsController",
     "Method": "GetEntityById",
     "RelativePath": "api/GetEntityById",
     "HttpMethod": "GET",
@@ -80,7 +80,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WebAPI.Controllers.ProductsController",
+    "ContainingType": "WebApi.Controllers.ProductsController",
     "Method": "List",
     "RelativePath": "api/List",
     "HttpMethod": "GET",
@@ -90,7 +90,7 @@
     "ReturnTypes": []
   },
   {
-    "ContainingType": "WebAPI.Controllers.ProductsController",
+    "ContainingType": "WebApi.Controllers.ProductsController",
     "Method": "Update",
     "RelativePath": "api/Update",
     "HttpMethod": "PUT",
@@ -99,7 +99,7 @@
     "Parameters": [
       {
         "Name": "product",
-        "Type": "WebAPI.Entities.ProductModel",
+        "Type": "WebApi.Entities.ProductModel",
         "IsRequired": true
       }
     ],

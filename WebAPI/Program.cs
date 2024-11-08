@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using WebAPI.Config;
-using WebAPI.Entities;
-using WebAPI.Repository;
-using WebAPI.Token;
+using WebApi.Config;
+using WebApi.Entities;
+using WebApi.Repository;
+using WebApi.Token;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,42 +14,48 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Configura a string de conexão vinda do appSettings
-builder.Services.AddDbContext<ContextBase>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-// Configuração do Identity para não fazer confirmação de e-mail (UserControllers)
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ContextBase>();
-//Interfaces e Repositorios
+
+// Configura a string de conexï¿½o vinda do appSettings
+builder.Services.AddDbContext<ContextBase>(options =>
+               options.UseSqlServer(
+                   builder.Configuration.GetConnectionString("DefaultConnection")));
+// Configuraï¿½ï¿½o do Identity para nï¿½o fazer confirmaï¿½ï¿½o de e-mail (UserControllers)
+builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ContextBase>();
+
+
+// Interfaces e repositorios
 builder.Services.AddSingleton<InterfaceProduct, RepositoryProduct>();
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
-{
-    option.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+             .AddJwtBearer(option =>
+             {
+                 option.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuer = false,
+                     ValidateAudience = false,
+                     ValidateLifetime = true,
+                     ValidateIssuerSigningKey = true,
+                     //Teste pode ser susbtituido pelo nome da empresa para quem o serviï¿½o serï¿½ oferecido
+                     ValidIssuer = "Teste.Securiry.Bearer",
+                     ValidAudience = "Teste.Securiry.Bearer",
+                     IssuerSigningKey = JwtSecurityKey.Create("43443FDFDF34DF34343fdf344SDFSDFSDFSDFSDF4545354345SDFGDFGDFGDFGdffgfdGDFGDGR%")
+                 };
 
-        //Teste pode ser susbtituido pelo nome da empresa para quem o serviço será oferecido
-        ValidIssuer = "Teste.Securiry.Beared",
-        ValidAudience = "Teste.Securiry.Beared",
-        IssuerSigningKey = JwtSecurityKey.Create("Secret_Key-12345678")
-    };
-
-    option.Events = new JwtBearerEvents
-    {
-        OnAuthenticationFailed = context =>
-        {
-            Console.WriteLine("OnAuthenticationFailed: " + context.Exception.Message);
-            return Task.CompletedTask;
-        },
-        OnTokenValidated = context =>
-        {
-            Console.WriteLine("OnTokenValidated: " + context.SecurityToken);
-            return Task.CompletedTask;
-        }
-    }; 
-});
+                 option.Events = new JwtBearerEvents
+                 {
+                     OnAuthenticationFailed = context =>
+                     {
+                         Console.WriteLine("OnAuthenticationFailed: " + context.Exception.Message);
+                         return Task.CompletedTask;
+                     },
+                     OnTokenValidated = context =>
+                     {
+                         Console.WriteLine("OnTokenValidated: " + context.SecurityToken);
+                         return Task.CompletedTask;
+                     }
+                 };
+             });
 
 var app = builder.Build();
 

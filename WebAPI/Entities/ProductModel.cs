@@ -1,4 +1,4 @@
-﻿namespace WebAPI.Entities
+﻿namespace WebApi.Entities
 {
     public class ProductModel
     {
